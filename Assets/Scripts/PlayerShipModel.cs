@@ -7,6 +7,6 @@ public class PlayerShipModel : MonoBehaviour {
 	void Start () {
 		if (model)
 			Destroy (model);
-		Instantiate(GameManager.instance.ships[GameManager.instance.currentShip], transform);
+		Instantiate(GameManager.instance.ships[GameManager.instance.currentShip].shipPrefab, transform);
 	}
 }

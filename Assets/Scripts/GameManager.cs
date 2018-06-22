@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
 	public GameObject destroyParticles;
 	public GameObject endGameCanvas;
-	public List<GameObject> ships;
+	public List<ShipDefinition> ships;
 	public int currentShip = 0;
 	public List<GameObject> enableObjectsAtGameStart;
 	public List<GameObject> objectsToEnableAtRestart;
@@ -34,50 +34,43 @@ public class GameManager : MonoBehaviour {
 
 	public void EndGame () {
 		counting = false;
-		spawner.gameObject.SetActive(false);
+		spawner.gameObject.SetActive (false);
 		endGameCanvas.SetActive (true);
 	}
 
 	public void Restart () {
-		endGameCanvas.GetComponent<EndGameMenu>().lastCredits = instance.credits;
-		spawner.RestartSpawner();
+		endGameCanvas.GetComponent<EndGameMenu> ().lastCredits = instance.credits;
+		spawner.RestartSpawner ();
 		distance = 0;
-		endGameCanvas.SetActive(false);
-		foreach(ObstacleLogic ol in FindObjectsOfType<ObstacleLogic>())
-		{
-			Destroy(ol.gameObject);
+		endGameCanvas.SetActive (false);
+		foreach (ObstacleLogic ol in FindObjectsOfType<ObstacleLogic> ()) {
+			Destroy (ol.gameObject);
 		}
-		foreach(GameObject go in objectsToEnableAtRestart)
-		{
-			go.SetActive(true);
+		foreach (GameObject go in objectsToEnableAtRestart) {
+			go.SetActive (true);
 		}
 		counting = true;
 	}
 
-	public void StartGame()
-	{
-		endGameCanvas.GetComponent<EndGameMenu>().lastCredits = instance.credits;
+	public void StartGame () {
+		endGameCanvas.GetComponent<EndGameMenu> ().lastCredits = instance.credits;
 		distance = 0;
 		counting = true;
-		foreach(GameObject go in enableObjectsAtGameStart)
-		{
-			go.SetActive(true);
+		foreach (GameObject go in enableObjectsAtGameStart) {
+			go.SetActive (true);
 		}
 	}
 
-	public void GoBackToMenu()
-	{
-		menu.SetActive(true);
-		endGameCanvas.SetActive(false);
-		foreach(GameObject go in enableObjectsAtGameStart)
-		{
-			go.SetActive(false);
+	public void GoBackToMenu () {
+		menu.SetActive (true);
+		endGameCanvas.SetActive (false);
+		foreach (GameObject go in enableObjectsAtGameStart) {
+			go.SetActive (false);
 		}
 	}
 
-	private void Update() {
-		if(counting)
-		{
+	private void Update () {
+		if (counting) {
 			distance += Time.deltaTime * distanceMultiplier;
 		}
 	}
