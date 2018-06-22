@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour {
 		else if (instance != this)
 			Destroy (gameObject);
 		DontDestroyOnLoad (gameObject);
+		try {
+			DataManager.LoadData ();
+		} catch {
+			DataManager.SaveData ();
+		}
 	}
 	public static void SpawnDeathParticles (Vector3 position) {
 		Instantiate (instance.destroyParticles, position, Quaternion.identity);

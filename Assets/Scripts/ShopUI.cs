@@ -35,6 +35,7 @@ public class ShopUI : MonoBehaviour {
 			}
 		}
 		RebuildUI ();
+		DataManager.SaveData ();
 	}
 
 	public void BuyShip (ShipDefinition ship) {
@@ -42,11 +43,13 @@ public class ShopUI : MonoBehaviour {
 			GameManager.instance.credits -= ship.shipPrice;
 			GameManager.instance.currentShip = GameManager.instance.ships.IndexOf (ship);
 			ship.isBought = true;
+			FindObjectOfType<MenuUIController>().creditsText.text = GameManager.instance.credits.ToString ("N0");
 			UseShip ();
 		}
+		DataManager.SaveData ();
 	}
 
-	void RebuildUI () {
+	public void RebuildUI () {
 		foreach (ShopShipUI ship in shipUIs) {
 			ship.buyButton.SetActive (true);
 			ship.useButton.SetActive (false);
