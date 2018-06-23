@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour {
 	public GameObject destroyParticles;
 	public GameObject endGameCanvas;
 	public List<ShipDefinition> ships;
+	public List<TrailDefinition> trails;
 	public int currentShip = 0;
+	public int currentTrail;
 	public List<GameObject> enableObjectsAtGameStart;
 	public List<GameObject> objectsToEnableAtRestart;
 	public GameObject menu;

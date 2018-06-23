@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerShipModel : MonoBehaviour {
 	public GameObject model;
-	void Start () {
+	void OnEnable () {
 		if (model)
 			Destroy (model);
 		Instantiate(GameManager.instance.ships[GameManager.instance.currentShip].shipPrefab, transform);
