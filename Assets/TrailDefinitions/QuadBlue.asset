@@ -43,6 +43,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  trailPrice: 0
+  trailPrice: 220
   isBought: 0
   isUsed: 0

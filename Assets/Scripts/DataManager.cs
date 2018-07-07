@@ -33,6 +33,8 @@ public class DataManager : MonoBehaviour {
 			ship.isBought = isBoughtData[iterator] == '1' ? true : false;
 			if (isUsed == ship.shipName) {
 				ship.isUsed = true;
+			} else {
+				ship.isUsed = false;
 			}
 			iterator++;
 		}
@@ -44,9 +46,23 @@ public class DataManager : MonoBehaviour {
 			trail.isBought = isBoughtData[iterator] == '1' ? true : false;
 			if (isUsed == trail.trailName) {
 				trail.isUsed = true;
+			} else {
+				trail.isUsed = false;
 			}
 			iterator++;
 		}
 		FindObjectOfType<ShopUI> ().RebuildTrailUI ();
+	}
+
+	public static void SaveDistanceAndCredits () {
+		PlayerPrefs.SetFloat ("distance", GameManager.instance.totalDistance);
+		PlayerPrefs.SetFloat ("recordDistance", GameManager.instance.recordDistance);
+		PlayerPrefs.SetFloat ("credits", GameManager.instance.credits);
+	}
+
+	public static void LoadDistanceAndCredits () {
+		GameManager.instance.totalDistance = PlayerPrefs.GetFloat ("distance");
+		GameManager.instance.recordDistance = PlayerPrefs.GetFloat ("recordDistance");
+		GameManager.instance.credits = PlayerPrefs.GetFloat ("credits");
 	}
 }

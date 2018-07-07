@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using GooglePlayGames;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
-using TMPro;
+using UnityEngine.UI;
+
 public class MenuUIController : MonoBehaviour {
 
 	public GameObject shop;
@@ -11,10 +14,15 @@ public class MenuUIController : MonoBehaviour {
 	float defaultShopPosition, defaultLeaderboardsPosition;
 	public float transitionSpeed = 0.4f;
 	public TextMeshProUGUI creditsText;
+	public TextMeshProUGUI loggingText;
+	public Button leadeboardsButton;
+
+	private void Start () {
+	}
 	private void OnEnable () {
 		defaultShopPosition = shop.transform.localPosition.x;
 		defaultLeaderboardsPosition = leaderboards.transform.localPosition.x;
-		creditsText.text = GameManager.instance.credits.ToString("N0");
+		creditsText.text = GameManager.instance.credits.ToString ("N0");
 	}
 	public void ShowShop () {
 		shop.GetComponent<SortingGroup> ().sortingOrder = 1;
@@ -28,7 +36,7 @@ public class MenuUIController : MonoBehaviour {
 
 	public void ShowLeaderboards () {
 		leaderboards.GetComponent<SortingGroup> ().sortingOrder = 1;
-		leaderboards.transform.DOLocalMoveX (0, transitionSpeed);
+		leaderboards.transform.DOLocalMoveX (0, transitionSpeed).OnComplete (ShowPlatformLeaderboards);
 	}
 
 	public void HideLeaderboards () {
@@ -36,10 +44,36 @@ public class MenuUIController : MonoBehaviour {
 		leaderboards.transform.DOLocalMoveX (defaultLeaderboardsPosition, transitionSpeed);
 	}
 
-	private void Update() {
-		if(Input.GetKeyDown(KeyCode.Escape))
-		{
-			Application.Quit();
+	public void LoggedUser (bool success) {
+		if (success) {
+			loggingText.text = "";
+			leadeboardsButton.interactable = true;
+		} else
+			loggingText.text = "Failed to log in";
+	}
+
+	void ShowPlatformLeaderboards () {
+#if UNITY_ANDROID
+		ShowGoogleLeaderboards ();
+#elif UNITY_IOS
+		ShowIosLeaderboards ();
+#else
+		ShowGoogleLeaderboards ();
+#endif
+	}
+
+	void ShowGoogleLeaderboards () {
+		if (Social.localUser.authenticated) {
+			PlayGamesPlatform.Instance.ShowLeaderboardUI("CgkImf7i1qcfEAIQAA");
+		}
+	}
+	void ShowIosLeaderboards () {
+
+	}
+
+	private void Update () {
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Application.Quit ();
 		}
 	}
 }

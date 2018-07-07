@@ -45,4 +45,4 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   trailPrice: 0
   isBought: 1
-  isUsed: 0
+  isUsed: 1
